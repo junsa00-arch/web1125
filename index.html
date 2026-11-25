@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f4f6fb">
+  <meta name="theme-color" content="#ffe944">
   <title>출장 여비 계산기</title>
   <style>
     :root{color-scheme:light;--ink:#17243b;--muted:#6d7890;--line:#e3e8f1;--blue:#355fe8;--blue-dark:#2448c7;--bg:#f4f6fb;--card:#fff;--soft:#f6f8fd;--green:#148568;--red:#b44b4b;--shadow:0 12px 35px #24345112}
@@ -68,12 +68,67 @@
     @media(max-width:780px){.page{padding:20px 16px 32px}.layout{grid-template-columns:1fr}.top-actions{gap:7px}.fullscreen-btn{font-size:12px;padding:6px 9px}}
     @media(max-width:520px){.top-actions{flex-direction:column-reverse;align-items:flex-end}.fullscreen-btn{min-height:36px}.offline{width:auto;height:auto;font-size:11px;padding:5px 9px}.offline:before{width:7px;height:7px}}
     @media print{.top-actions{display:none}.page{width:auto;min-height:0;padding:0}.layout,.top{max-width:none}}
+    :root{--ink:#292929;--muted:#777;--line:#dedede;--blue:#f04455;--blue-dark:#d93448;--bg:#f0f0f0;--card:#fff;--soft:#f7f7f7;--green:#138653;--red:#c93245;--shadow:none}
+    body{background:#f0f0f0;color:#292929;font-family:Arial,"Malgun Gothic",system-ui,sans-serif}
+    .page{padding:0 0 40px;background:#f0f0f0}
+    .top{position:relative;isolation:isolate;overflow:hidden;display:flex;align-items:center;max-width:none;width:100%;min-height:285px;margin:0 0 24px;padding:42px clamp(22px,6vw,88px);background:#ffe944;border:0;border-bottom:10px solid #fff}
+    .top:before,.top:after{content:"";position:absolute;z-index:-1;border-radius:50%;pointer-events:none}
+    .top:before{width:min(38vw,440px);aspect-ratio:1;right:10%;top:-58%;background:#f04455}
+    .top:after{width:min(26vw,300px);aspect-ratio:1;right:-1%;top:-10%;background:#fff04c;border:2px solid #f7df35}
+    .brand-lockup{position:relative;z-index:1;gap:0;max-width:720px}
+    .mascot{display:none}
+    .brand-lockup>div{max-width:620px}
+    .eyebrow{color:#d63b4a;letter-spacing:.12em;font-size:12px;font-weight:800}
+    h1{color:#292929;font-size:clamp(34px,5vw,58px);letter-spacing:-.055em;margin:8px 0 10px}
+    .subtitle{color:#4a4542;font-size:clamp(14px,1.5vw,17px)}
+    .top-actions{position:relative;z-index:2}
+    .offline{border:1px solid #292929;background:#fff;color:#292929}
+    .offline:before{background:#138653;border:0}
+    .fullscreen-btn{border:1px solid #292929;border-radius:5px;background:#fff;color:#292929}
+    .fullscreen-btn:hover{background:#f6d8d9}
+    .layout{max-width:1580px;width:100%;margin:0 auto;padding:0 clamp(16px,4vw,56px);grid-template-columns:minmax(0,1.08fr) minmax(330px,.92fr);gap:22px}
+    .card{background:#fff;border:0;border-radius:8px;box-shadow:none}
+    .form-card,.results{padding:clamp(20px,2.5vw,34px)}
+    .results{border-top:7px solid #ffe944}
+    .section-head{font-size:18px;color:#292929;margin-bottom:21px}
+    .number{width:29px;height:29px;background:#138653;color:#fff;border:0;border-radius:50%}
+    .field label,.label{font-size:14px;color:#292929}
+    .control{border:1px solid #d4d4d4;border-radius:5px;background:#fff;color:#292929;min-height:46px}
+    .control:focus{border-color:#138653;box-shadow:0 0 0 3px #1386531c;background:#fff}
+    .select-wrap select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23292929' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")}
+    .hint{color:#777}
+    .divider{height:3px;background:#ffe944;opacity:1}
+    .checkrow{border:1px solid #dedede;border-radius:5px;background:#fff}
+    .checkrow:has(input:checked){background:#fffbe0;border-color:#e7d12d}
+    .checkrow input,.inline-check input{accent-color:#138653}
+    .calculation{background:#f04455;color:#fff;border:0;border-radius:7px;padding:24px;margin-bottom:20px}
+    .calc-label,.calc-sub{color:#fff3f3}
+    .total{font-size:clamp(34px,4vw,46px);letter-spacing:-.045em}
+    .result-title{font-size:16px}
+    .items li{border-bottom:1px solid #e7e7e7;padding:14px 0}
+    .item-name{color:#383838}.item-meta{color:#777}.amount{color:#138653}.amount.zero{color:#999}
+    .status{border:1px solid #eedf8e;border-radius:5px;background:#fff9d8;color:#665a18}
+    .status.error{border-color:#f2bbc1;background:#fff0f1;color:#982e3d}
+    .btn{border:1px solid #d0d0d0;border-radius:5px;background:#fff;color:#333;min-height:44px}
+    .btn:hover{background:#fff7cb;transform:none}
+    .btn.primary{background:#f04455;border-color:#f04455;color:#fff;box-shadow:none}
+    .btn.primary:hover{background:#d93448}
+    #printResult{background:#fff;color:#333}
+    #excelResult{background:#138653;border-color:#138653;color:#fff}
+    #excelResult:hover{background:#0e7044}
+    .note{border:0;border-left:4px solid #ffe944;border-radius:0;background:#f7f7f7;color:#666}
+    .note strong{color:#292929}.foot{color:#777}
+    :fullscreen{background:#f0f0f0}
+    :fullscreen .page{background:#f0f0f0}
+    @media(max-width:780px){.top{min-height:250px;padding:30px 22px}.top:before{width:270px;right:-4%;top:-47%}.top:after{width:190px;right:-10%;top:2%}.layout{grid-template-columns:1fr;padding:0 16px}.results{position:static}}
+    @media(max-width:520px){.top{align-items:flex-start;min-height:245px;padding:28px 18px}.top:before{width:200px;right:-18%;top:-27%}.top:after{width:130px;right:-13%;top:15%}.brand-lockup{padding-right:14px}.top-actions{flex-direction:column-reverse;align-items:flex-end}.offline{width:auto;height:auto;font-size:11px;padding:5px 9px}.fullscreen-btn{min-height:36px;font-size:12px}.layout{padding:0 12px}}
+    @media print{body,.page{background:#fff}.page{padding:0}.top{min-height:0;padding:12px 0;background:#fff;border:0;margin-bottom:15px}.top:before,.top:after,.top-actions{display:none}.layout{padding:0;max-width:none}.results{border-top:0}.calculation{background:#f04455!important;print-color-adjust:exact;-webkit-print-color-adjust:exact}}
   </style>
 </head>
 <body>
   <main class="page">
     <header class="top">
-      <div class="brand-lockup"><svg class="mascot" viewBox="0 0 80 72" role="img" aria-label="파란 귀와 분홍 볼을 가진 흰 고양이 캐릭터"><path d="M10 27C10 17 13 5 19 5c6 0 10 10 14 15 7-4 17-4 23 0 5-6 9-14 14-13 7 1 7 14 7 22 5 7 6 17 3 27-4 11-16 16-40 16S7 66 4 55c-3-10 0-21 6-28Z" fill="#fff" stroke="#050505" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 27c1-9 3-19 8-20 5 0 9 10 14 15 7-4 16-4 23 0 5-6 9-13 14-12 5 1 6 11 6 19-7 5-15 7-23 3l-13-6-10 7c-7 4-14 0-19-6Z" fill="#88c4dd" stroke="#050505" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="26" cy="43" rx="4.8" ry="6" fill="#050505"/><ellipse cx="55" cy="43" rx="4.8" ry="6" fill="#050505"/><circle cx="27.5" cy="41" r="1.7" fill="#fff"/><circle cx="56.5" cy="41" r="1.7" fill="#fff"/><ellipse cx="15" cy="51" rx="5.5" ry="3.5" fill="#f3b6c2"/><ellipse cx="66" cy="51" rx="5.5" ry="3.5" fill="#f3b6c2"/><path d="M35 53c2 3 4 3 5 0 2 3 5 3 7 0" fill="none" stroke="#050505" stroke-width="3.5" stroke-linecap="round"/></svg><div><div class="eyebrow">Domestic travel · expense estimate</div><h1>출장 여비 계산기</h1><p class="subtitle">출장 기간과 조건을 입력하면 항목별 지급 예상액을 계산합니다.</p></div></div>
+      <div class="brand-lockup"><div><div class="eyebrow">근무지 외 국내출장 · DOMESTIC TRAVEL</div><h1>출장 여비 계산기</h1><p class="subtitle">출장 기간과 조건을 입력하면 항목별 예상 여비를 간편하게 계산합니다.</p></div></div>
       <div class="top-actions"><span class="offline">오프라인 사용 가능</span><button class="fullscreen-btn" id="fullscreenToggle" type="button" aria-pressed="false">전체 화면</button></div>
     </header>
     <div class="layout">
